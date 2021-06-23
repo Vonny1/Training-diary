@@ -13,7 +13,7 @@ public class Train {
     {
 
     }
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
 
     @ColumnInfo(name = "Exer")

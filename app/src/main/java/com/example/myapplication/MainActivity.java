@@ -8,14 +8,37 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        Intent intent = new Intent(this, MainActivity2.class);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "train_db").allowMainThreadQueries().build();
+//        Train train = new Train();
+//        train.setExer("НОВАЯ ЗАПИСЬБ");
+//        train.setRep(10);
+//        train.setWeight(20);
+//        db.trainDao().insertOne(train);
+
+
+        List<Train> list = db.trainDao().getAll();
+        Train trainnew = list.get(4);
+
+        String message = trainnew.getExer();
+        intent.putExtra("message", message);
+        // запуск activity
+        startActivity(intent);
+
+
     }
     public void sendMessage(View view) {
         // действия, совершаемые после нажатия на кнопку
@@ -37,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     public void testDb(View view)
     {
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database.db").build();
+                AppDatabase.class, "train_db").build();
         Train train = new Train();
         train.setExer("test");
         train.setRep(10);
